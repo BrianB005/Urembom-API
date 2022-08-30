@@ -18,7 +18,7 @@ const searchProducts = async (req, res) => {
   let products;
   try {
     products = await Product.find({ name: { $regex: query, $options: "i" } });
-    res.status(200).json({ products });
+    res.status(200).json(products);
     if (products.length < 1) {
       res.status(200).json({ msg: "No products match your search!!" });
     }
