@@ -39,12 +39,15 @@ const getSingleProduct = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ product });
 };
-
 const searchCategoryProducts = async (req, res) => {
-  const query = req.query;
+  const category = req.query.category;
+
   try {
-    const products = await Product.find(query);
-    res.status(200).json({ products });
+    const products = await Product.find({
+      category: { $regex: category, $options: "i" },
+    });
+
+    res.status(200).json(products);
   } catch (err) {
     console.log(err, "filter failed");
     res.status(500).json({
